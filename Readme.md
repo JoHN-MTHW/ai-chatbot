@@ -5,7 +5,6 @@
 [![LangChain](https://img.shields.io/badge/Powered%20by-LangChain-2E7D32?logo=python&logoColor=white)](https://python.langchain.com/)
 [![Ollama](https://img.shields.io/badge/Model-Ollama-0A66C2?logo=ollama&logoColor=white)](https://ollama.ai/)
 [![Python](https://img.shields.io/badge/Made%20with-Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
