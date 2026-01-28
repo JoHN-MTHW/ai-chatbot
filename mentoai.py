@@ -36,17 +36,29 @@ st.markdown("""
 # Title and Intro
 st.title("MENTO BOT")
 
+AVAILABLE_MODELS = [
+    "gemma3:4b",
+    "deepseek-r1:1.5b"
+]
+
+
 
 # Sidebar: Configuration + Features
 with st.sidebar:
     st.header("⚙ Configuration")
+
     selected_model = st.selectbox(
         "Choose Model",
-        ["deepseek-r1:1.5b"],
-        index=0
+        AVAILABLE_MODELS
     )
 
-    preset = st.selectbox("Prompt Preset", ["Default", "Bug Fixer", "Code Reviewer", "Optimizer"])
+    st.markdown(f"🧠 **Active Model:** `{selected_model}`")
+
+    preset = st.selectbox(
+        "Prompt Preset",
+        ["Default", "Bug Fixer", "Code Reviewer", "Optimizer"]
+    )
+
     run_code = st.checkbox("Run Python Code")
 
     st.divider()
@@ -59,7 +71,9 @@ with st.sidebar:
     """)
 
     if st.button("Clear Chat"):
-        st.session_state.message_log = [{"role": "ai", "content": "Hi! I'm MENTO. How can I help you code today? "}]
+        st.session_state.message_log = [
+            {"role": "ai", "content": "Hi! I'm MENTO. How can I help you code today?"}
+        ]
         st.rerun()
 
     if st.button("Download Chat Log"):
@@ -68,8 +82,20 @@ with st.sidebar:
         )
         st.download_button("⬇ Save Chat", history_text, file_name="chat_log.txt")
 
+
+if "last_model" not in st.session_state:
+    st.session_state.last_model = selected_model
+
+if st.session_state.last_model != selected_model:
+    st.session_state.message_log = [
+        {"role": "ai", "content": f"Switched to **{selected_model}**. How can I help?"}
+    ]
+    st.session_state.last_model = selected_model
     st.divider()
-    st.markdown("Built with [Ollama](https://ollama.ai/) | [LangChain](https://python.langchain.com/)")
+
+
+
+    
 
 # Prompt templates based on role
 preset_map = {
@@ -80,11 +106,16 @@ preset_map = {
 }
 
 # LLM Setup
-llm_engine = ChatOllama(
-    model=selected_model,
-    base_url="http://localhost:11434",
-    temperature=0.3
-)
+@st.cache_resource(show_spinner=False)
+def load_llm(model_name: str):
+    return ChatOllama(
+        model=model_name,
+        base_url="http://127.0.0.1:11434",
+        temperature=0.3
+    )
+
+llm_engine = load_llm(selected_model)
+
 
 system_prompt = SystemMessagePromptTemplate.from_template(preset_map[preset])
 
@@ -127,11 +158,17 @@ def generate_ai_response(prompt_chain):
 # Chat Input
 user_query = st.chat_input("Type your coding question here...")
 
+import time
 if user_query:
     st.session_state.message_log.append({"role": "user", "content": user_query})
     with st.spinner("🧠 Thinking..."):
         prompt_chain = build_prompt_chain()
+        start_time = time.time()
         ai_response = generate_ai_response(prompt_chain)
+        elapsed = round(time.time() - start_time, 2)
+
+        ai_response += f"\n\n⏱ **Response time:** `{elapsed}s`"
+
 
     st.session_state.message_log.append({"role": "ai", "content": ai_response})
     st.rerun()
