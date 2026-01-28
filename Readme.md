@@ -1,107 +1,101 @@
 # 🧠 MENTO BOT  
 > An AI-Powered Coding Assistant built with **Streamlit**, **LangChain**, and **Ollama**
 
-[![Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![LangChain](https://img.shields.io/badge/Powered%20by-LangChain-2E7D32?logo=python&logoColor=white)](https://python.langchain.com/)
-[![Ollama](https://img.shields.io/badge/Model-Ollama-0A66C2?logo=ollama&logoColor=white)](https://ollama.ai/)
+[![Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)\
+[![LangChain](https://img.shields.io/badge/Powered%20by-LangChain-2E7D32?logo=python&logoColor=white)](https://python.langchain.com/)\
+[![Ollama](https://img.shields.io/badge/LLM%20Runtime-Ollama-0A66C2?logo=ollama&logoColor=white)](https://ollama.ai/)\
+![Local Only](https://img.shields.io/badge/Local%20LLMs-Yes-success)\
 [![Python](https://img.shields.io/badge/Made%20with-Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ------------------------------------------------------------------------
 
 ## 💡 Overview
 
-**MENTO BOT** is an intelligent coding assistant designed to help developers write, debug, and optimize Python code effortlessly.  
-Built with **Streamlit** for an elegant UI and powered by **LangChain + Ollama** for local LLM interactions.
+**MENTO BOT** is a local-first AI coding assistant designed to help
+developers **debug, review, optimize, and reason about Python code**.
 
----
+🕰️ **Project Background**\
+This project was originally built **\~1 year ago**, at a time when
+**local LLM tooling and generative AI workflows were still emerging**.\
+Recently, the project was **refined and optimized**, with support added
+for **multiple local models** and improved state handling.
+
+⚠️ **Important:**\
+This application requires **Ollama running locally**. It **cannot be
+deployed to cloud platforms** like Streamlit Cloud due to its local LLM
+dependency.
+
+------------------------------------------------------------------------
 
 ## 🚀 Key Features
 
-✅ **Multiple AI Modes**
-- 🧠 *Default* – Smart coding assistant  
-- 🐞 *Bug Fixer* – Identify and fix code issues  
-- 🧑‍💻 *Code Reviewer* – Suggest improvements and style fixes  
-- ⚡ *Optimizer* – Enhance performance and efficiency  
+### 🧠 Multi-Mode AI Assistant
 
-✅ **Extras**
-- 💬 Persistent chat history  
-- 💾 Download chat logs  
-- 🧮 Safe code execution  
-- 🎨 Custom dark UI theme  
-- ⚙️ Local Ollama model integration
+-   **Default** -- General Python coding help\
+-   **Bug Fixer** -- Identify and fix issues\
+-   **Code Reviewer** -- Suggest improvements and best practices\
+-   **Optimizer** -- Improve performance and efficiency
 
----
+### 🔁 Multi-Model Support (via Ollama)
+
+Easily switch between different local LLMs at runtime: -
+`deepseek-r1:1.5b` - `gemma3:4b`
+
+> Any Ollama-compatible model can be added with minimal changes.
+
+### ⚙️ Developer Utilities
+
+-   💬 Persistent chat history
+-   💾 Downloadable chat logs
+-   🧮 Safe Python code execution sandbox
+-   🎨 Custom dark UI theme
+-   🔒 Fully local inference (no APIs, no data leakage)
+
+------------------------------------------------------------------------
 
 ## 🖥️ Tech Stack
 
-| Component | Technology |
-|------------|-------------|
-| Frontend | Streamlit |
-| AI Framework | LangChain |
-| LLM Backend | Ollama |
-| Language | Python 3.10+ |
+  Component          Technology
+  ------------------ -----------------
+  Frontend           Streamlit
+  AI Orchestration   LangChain
+  LLM Runtime        Ollama (local)
+  Models             DeepSeek, Gemma
+  Language           Python 3.10+
 
----
+------------------------------------------------------------------------
 
-## 🧩 Installation
+## ⚠️ Local Setup Instructions
 
-Clone this repository:
-```bash
+### Prerequisites
+
+-   Python 3.10+
+-   Ollama installed locally
+
+### Steps
+
+``` bash
+ollama pull deepseek-r1:1.5b
+ollama pull gemma3:4b
+ollama serve
 git clone https://github.com/<your-username>/mento-bot.git
 cd mento-bot
-````
-
-Install dependencies:
-
-```bash
 pip install -r requirements.txt
-```
-
-Start the Streamlit app:
-
-```bash
 streamlit run app.py
 ```
 
-> 🧠 Make sure **Ollama** is running locally at `http://localhost:11434`.
+------------------------------------------------------------------------
 
----
+## 🧩 Project Structure
 
-## 🧾 Requirements
+    mento-bot/
+    ├── app.py
+    ├── requirements.txt
+    ├── README.md
+    ├── .gitignore
 
-Create a `requirements.txt` file with:
+------------------------------------------------------------------------
 
-```txt
-streamlit
-langchain
-langchain-ollama
-langchain-core
-ollama
-```
-
----
-
-## ⚙️ How It Works
-
-1. User enters a question or Python problem
-2. The app builds a prompt chain using LangChain templates
-3. Ollama model (`deepseek-r1:1.5b` by default) generates a structured reply
-4. (Optional) The app safely executes Python code and displays results
-
----
-
-## 🧱 Folder Structure
-
-```
-mento-bot/
- ├── app.py               # Main Streamlit application
- ├── requirements.txt     # Python dependencies
- ├── README.md            # Project documentation
- └── .gitignore           # Ignored files and folders
-```
-
----
 
 ## 🌐 Deployment (Streamlit Cloud)
 
